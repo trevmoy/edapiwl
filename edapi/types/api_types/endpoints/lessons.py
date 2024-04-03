@@ -2,7 +2,7 @@
 
 from typing import TypedDict
 from ..user import API_User
-from ..lesson import API_Lesson
+from ..lesson import API_Lesson, API_Lesson_Content
 
 
 # === GET /api/lessons/<lesson_id> ===
@@ -16,4 +16,18 @@ class API_GetLesson(TypedDict):
     """
 
     lesson: list[API_Lesson]
+
+class API_GetLesson_Contents(TypedDict):
+    """
+    Response type for GET /api/lessons/<lesson_id>/contents.
+    """
+
+    lesson: list[API_Lesson_Content]
+
+class API_GetLesson_Contents_Challenge(TypedDict):
+    """
+    Response type for GET /api/lessons/<lesson_id>/contents/challenge.
+    """
+
+    challenge: list[API_Lesson_Content]
 

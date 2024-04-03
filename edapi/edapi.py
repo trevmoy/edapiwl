@@ -26,12 +26,12 @@ from .types.api_types.endpoints.threads import (
     API_PutThread_Response,
     API_PutThread_Response_Thread,
 )
-from .types.api_types.endpoints.lessons import API_GetLesson
+from .types.api_types.endpoints.lessons import API_GetLesson, API_GetLesson_Contents, API_GetLesson_Contents_Challenge
 
 from .types.api_types.endpoints.user import API_User_Response
 from .types.api_types.thread import API_Thread_WithComments, API_Thread_WithUser
 
-from .types.api_types.lesson import API_Lesson
+from .types.api_types.lesson import API_Lesson, API_Lesson_Content, API_Lesson_Challenge_Content
 
 ANSI_BLUE = lambda text: f"\u001b[34m{text}\u001b[0m"
 ANSI_GREEN = lambda text: f"\u001b[32m{text}\u001b[0m"
@@ -239,6 +239,36 @@ class EdAPI:
         )
 
 
+    @_ensure_login
+    def get_lesson_content(self, lesson_id: int) -> API_Lesson_Content:
+        """
+        Retrieve the details for a lesson, given its id.
+
+        GET /api/lessons/<lesson_id>?view=1
+        """
+        lesson_url = urljoin(API_BASE_URL, f"lessons/{lesson_id}?view=1")
+        response = self.session.get(lesson_url)
+        if response.ok:
+            response_json: API_GetLesson_Contents = response.json()
+            return response_json
+
+        _throw_error(f"Failed to get lesson {lesson_id}.", response.content)
+
+
+    @_ensure_login
+    def get_challenge(self, challenge_id: int) -> API_Lesson_Challenge_Content:
+        """
+        Retrieve the details for a challenge, given its id.
+
+        GET /api/challenges/<challenge_id>?view=1
+        """
+        challenge_url = urljoin(API_BASE_URL, f"challenges/{challenge_id}?view=1")
+        response = self.session.get(challenge_url)
+        if response.ok:
+            response_json: API_GetLesson_Contents_Challenge = response.json()
+            return response_json
+
+        _throw_error(f"Failed to get challenge {challenge_id}.", response.content)
    
     @_ensure_login
     def list_lessons(self, course_id: int) -> API_Lesson:
