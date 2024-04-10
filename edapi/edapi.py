@@ -27,11 +27,13 @@ from .types.api_types.endpoints.threads import (
     API_PutThread_Response_Thread,
 )
 from .types.api_types.endpoints.lessons import API_GetLesson
+from .types.api_types.endpoints.markings import API_GetMarking
 
 from .types.api_types.endpoints.user import API_User_Response
 from .types.api_types.thread import API_Thread_WithComments, API_Thread_WithUser
 
 from .types.api_types.lesson import API_Lesson
+from .types.api_types.marking import API_Marking
 
 ANSI_BLUE = lambda text: f"\u001b[34m{text}\u001b[0m"
 ANSI_GREEN = lambda text: f"\u001b[32m{text}\u001b[0m"
@@ -291,6 +293,28 @@ class EdAPI:
             return response_json["thread"]
 
         _throw_error(f"Failed to get thread {thread_number}.", response.content)
+
+        # get marking status
+    @_ensure_login
+    def get_marking_status(self,
+                           lesson_id: int,
+                           attempt_id: int
+    ) -> API_Marking:
+        
+        """
+        Retrieve the marking status for a given attempt.
+
+        GET /api/lessons/<lesson_id>/marking_status?attempt=<attempt_id>&staff=true
+        """
+        marking_url = urljoin(
+            API_BASE_URL, f"lessons/{lesson_id}/marking_status?attempt={attempt_id}&staff=true"
+        )
+        response = self.session.get(marking_url)
+        if response.ok:
+            response_json: API_GetMarking = response.json()
+            return response_json
+        _throw_error(f"Failed to get marking status {lesson_id}.", response.content)
+
 
     @_ensure_login
     def post_thread(
