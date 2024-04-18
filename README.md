@@ -1,5 +1,9 @@
 # edapi
 
+#### Disclaimer
+
+>This project is a modified version of an [existing project](https://pypi.org/project/edapi/) with additional features.
+
 This package is an (unofficial) integration of the Ed API with Python. Since as of now there is no detailed documentation on the HTTP endpoints for the Ed API, I've reverse-engineered the endpoints by snooping through Chrome devtools.
 
 Further, since the Ed API is in beta, the API endpoints can change at any time, and this package may break.
@@ -11,12 +15,15 @@ This package is still a work in progress, and currently contains the following f
 * Uploading files to Ed (through direct file upload)
 * Get user information
 * List existing threads
+* List course information
+* List lessons
+* Lesson content
 
 This list may expand as the package is developed further.
 
 ## Installation
 
-This package is uploaded to PyPI: [https://pypi.org/project/edapi/](https://pypi.org/project/edapi/); the easiest way to install is with `pip3 install edapi`.
+This package is uploaded to PyPI: [https://pypi.org/project/edapiwl/0.0.3/](https://pypi.org/project/edapiwl/0.0.3/); the easiest way to install is with `pip3 install edapiwl==0.0.3`.
 
 ### Building the package
 
@@ -36,10 +43,10 @@ Your API key can be created through [https://edstem.org/us/settings/api-tokens](
 
 The following snippet is an example of using the API:
 ```python
-from edapi import EdAPI
+from edapi import EdAPIWL
 
 # initialize Ed API
-ed = EdAPI()
+ed = EdAPIWL()
 # authenticate user through the ED_API_TOKEN environment variable
 ed.login()
 
