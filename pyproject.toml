@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "edstem-api"
+name = "edapiwl"
 version = "0.0.3"
 description = "A modified version of edapi, an unofficial integration of the Ed API with Python"
 readme = "README.md"
